@@ -1,9 +1,9 @@
-def validate_ingredients(ingredients: str,
-                         allowed_ingredients: list[str]) -> str:
-    ingredients_list = [item.strip().lower() for
-                        item in ingredients.split(",")]
+def validate_ingredients(ingredients: str) -> str:
+    from .light_spellbook import light_spell_allowed_ingredients
 
-    for ingredient in ingredients_list:
-        if ingredient not in allowed_ingredients:
-            return "INVALID"
-    return "VALID"
+    allowed_ingredients = [item.lower() for item in light_spell_allowed_ingredients()]
+    ingredients_list = [item.strip().lower() for item in ingredients.split(",") if item.strip()]
+
+    if any(ingredient in allowed_ingredients for ingredient in ingredients_list):
+        return f"{ingredients} - VALID"
+    return f"{ingredients} - INVALID"
